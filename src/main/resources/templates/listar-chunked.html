@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text_="${titulo}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script type="application/javascript">
+        var year;
+    </script>
+</head>
+<body>
+<div class="container">
+<h1 th:text="${titulo}"></h1>
+</div>
+<div class="container">
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Autor</th>
+        <th>Editorial</th>
+        <th>Precio</th>
+        <th>Num. pag.</th>
+        <th>ISBN</th>
+        <th>Año de publicación</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${libros}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.titulo}"></td>
+        <td th:text="${item.autor}"></td>
+        <td th:text="${item.editorial}"></td>
+        <td th:text="${item.precio}"></td>
+        <td th:text="${item.numeroPaginas}"></td>
+        <td th:text="${item.isbn}"></td>
+        <td th:text="${item.fechaPublicacion}"></td>
+        <td>
+            <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary" th:href="@{/editar?id=${item.id}}"/>Editar</button>
+            <button type="button" class="btn btn-secondary"th:href="@{/eliminar?id=${item.id}}"/>Eliminar</button>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>
