@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text_="${titulo}"></title>
+    <title th:text="${titulo}"></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
@@ -13,6 +13,7 @@
 <body>
 <div class="container">
 <h1 th:text="${titulo}"></h1>
+    <a th:href="@{/crear}" class="btn btn-primary">Crear</a>
 </div>
 <div class="container">
 <table class="table">

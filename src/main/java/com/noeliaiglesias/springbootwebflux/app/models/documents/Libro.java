@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ public class Libro {
     private String editorial;
     private int numeroPaginas;
     private String isbn;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaPublicacion;
     private Double precio;
     private Date createdAt;
