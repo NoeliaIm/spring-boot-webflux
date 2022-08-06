@@ -25,5 +25,7 @@ public interface LibroService {
 
     Mono<Libro> findByIsbn(String isbn);
 
+    Flux<Libro> findByGeneroId(String generoId);
+
 
 }

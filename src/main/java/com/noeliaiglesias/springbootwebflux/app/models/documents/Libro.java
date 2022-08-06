@@ -29,5 +29,6 @@ public class Libro {
     private Date fechaPublicacion;
     @NotNull
     private Double precio;
+    private Genero genero;
     private Date createdAt;
 }

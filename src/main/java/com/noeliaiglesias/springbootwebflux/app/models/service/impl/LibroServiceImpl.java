@@ -26,6 +26,11 @@ public class LibroServiceImpl implements LibroService {
     }
 
     @Override
+    public Flux<Libro> findByGeneroId(String generoId) {
+        return null;
+    }
+
+    @Override
     public Flux<Libro> findAllNombreUpperCase() {
         return this.libroDao.findAll().map(libro -> {
             libro.setTitulo(libro.getTitulo().toUpperCase());

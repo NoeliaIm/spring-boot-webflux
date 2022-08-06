@@ -2,6 +2,7 @@ package com.noeliaiglesias.springbootwebflux.app;
 
 import com.github.javafaker.Faker;
 import com.noeliaiglesias.springbootwebflux.app.models.dao.LibroDao;
+import com.noeliaiglesias.springbootwebflux.app.models.documents.Genero;
 import com.noeliaiglesias.springbootwebflux.app.models.documents.Libro;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -33,6 +34,13 @@ public class LibroInitializer implements CommandLineRunner {
         log.info("Inicializando libros...");
         Faker faker = new Faker();
         List<Libro> librosList = new ArrayList<>();
+        List<Genero> generoList = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Genero genero = new Genero();
+            genero.setId(String.valueOf(i));
+            genero.setNombre(faker.book().genre());
+            generoList.add(genero);
+        }
         for (int i = 0; i < 10; i++) {
             Libro libro = new Libro();
             libro.setTitulo(faker.book().title());
@@ -41,7 +49,8 @@ public class LibroInitializer implements CommandLineRunner {
             libro.setNumeroPaginas(faker.number().numberBetween(50, 500));
             libro.setIsbn(faker.code().isbn10());
             libro.setFechaPublicacion(faker.date().birthday());
-            libro.setPrecio(faker.number().randomDouble(2, 0, 100));
+            libro.setPrecio(faker.number().randomDouble(2, 0, 30));
+            libro.setGenero(generoList.get(i % 3));
             librosList.add(libro);
         }
         Flux.fromIterable(librosList).flatMap(libro -> {
