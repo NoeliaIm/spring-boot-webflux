@@ -6,12 +6,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
-    <script type="application/javascript">
-        var year;
-    </script>
 </head>
 <body>
 <div class="container">
+    <div th:if="${param.error != null}" th:text="${param.error}"></div>
+    <div th:if="${param.success != null}" th:text="${param.success}"></div>
 <h1 th:text="${titulo}"></h1>
     <a th:href="@{/crear}" class="btn btn-primary">Crear</a>
 </div>
@@ -42,8 +41,8 @@
         <td th:text="${item.fechaPublicacion}"></td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary" th:href="@{/editar?id=${item.id}}"/>Editar</button>
-            <button type="button" class="btn btn-secondary"th:href="@{/eliminar?id=${item.id}}"/>Eliminar</button>
+            <a type="button" class="btn btn-secondary" th:href="@{/editar/}+${item.id}"/>Editar</a>
+            <a type="button" class="btn btn-secondary" th:href="@{/eliminar/}+${item.id}"/>Eliminar</a>
             </div>
         </td>
     </tr>

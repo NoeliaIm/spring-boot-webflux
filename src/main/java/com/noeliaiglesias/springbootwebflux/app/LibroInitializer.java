@@ -1,10 +1,9 @@
 package com.noeliaiglesias.springbootwebflux.app;
 
-import com.noeliaiglesias.springbootwebflux.app.models.dao.LibroDao;
 import com.github.javafaker.Faker;
+import com.noeliaiglesias.springbootwebflux.app.models.dao.LibroDao;
 import com.noeliaiglesias.springbootwebflux.app.models.documents.Libro;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Component;
@@ -45,7 +44,10 @@ public class LibroInitializer implements CommandLineRunner {
             libro.setPrecio(faker.number().randomDouble(2, 0, 100));
             librosList.add(libro);
         }
-        Flux.fromIterable(librosList).flatMap(libro ->{ libro.setCreatedAt(new Date()); return libroDao.save(libro);}).subscribe(l -> log.info("Libro guardado: " + l.toString()));
+        Flux.fromIterable(librosList).flatMap(libro -> {
+            libro.setCreatedAt(new Date());
+            return libroDao.save(libro);
+        }).subscribe(l -> log.info("Libro guardado: " + l.toString()));
         log.info("Libros inicializados...");
 
     }
