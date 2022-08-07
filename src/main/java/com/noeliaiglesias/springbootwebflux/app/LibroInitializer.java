@@ -1,6 +1,7 @@
 package com.noeliaiglesias.springbootwebflux.app;
 
 import com.github.javafaker.Faker;
+import com.noeliaiglesias.springbootwebflux.app.models.dao.GeneroDao;
 import com.noeliaiglesias.springbootwebflux.app.models.dao.LibroDao;
 import com.noeliaiglesias.springbootwebflux.app.models.documents.Genero;
 import com.noeliaiglesias.springbootwebflux.app.models.documents.Libro;
@@ -18,10 +19,13 @@ import java.util.List;
 @Component
 public class LibroInitializer implements CommandLineRunner {
     private final LibroDao libroDao;
+
+    private final GeneroDao generoDao;
     private final ReactiveMongoTemplate reactiveMongoTemplate;
 
-    public LibroInitializer(LibroDao libroDao, ReactiveMongoTemplate reactiveMongoTemplate) {
+    public LibroInitializer(LibroDao libroDao, GeneroDao generoDao, ReactiveMongoTemplate reactiveMongoTemplate) {
         this.libroDao = libroDao;
+        this.generoDao = generoDao;
         this.reactiveMongoTemplate = reactiveMongoTemplate;
     }
 
@@ -41,6 +45,9 @@ public class LibroInitializer implements CommandLineRunner {
             genero.setNombre(faker.book().genre());
             generoList.add(genero);
         }
+        Flux.fromIterable(generoList).flatMap(genero -> generoDao.save(genero)).subscribe(g -> log.info("Género guardado: " + g.toString()));
+        log.info("Géneros inicializados...");
+
         for (int i = 0; i < 10; i++) {
             Libro libro = new Libro();
             libro.setTitulo(faker.book().title());

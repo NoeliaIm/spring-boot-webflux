@@ -17,9 +17,9 @@ import javax.validation.constraints.NotEmpty;
 public class Genero {
 
     @Id
+    @NotEmpty
     private String id;
 
-    @NotEmpty
     private String nombre;
 
     public Genero(String nombre) {

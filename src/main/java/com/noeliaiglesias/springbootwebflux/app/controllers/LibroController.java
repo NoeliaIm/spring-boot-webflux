@@ -1,12 +1,15 @@
 package com.noeliaiglesias.springbootwebflux.app.controllers;
 
+import com.noeliaiglesias.springbootwebflux.app.models.documents.Genero;
 import com.noeliaiglesias.springbootwebflux.app.models.documents.Libro;
+import com.noeliaiglesias.springbootwebflux.app.models.service.GeneroService;
 import com.noeliaiglesias.springbootwebflux.app.models.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
@@ -21,9 +24,17 @@ public class LibroController {
 
     private final LibroService libroService;
 
+    private final GeneroService generoService;
+
+    @ModelAttribute("generos")
+    public Flux<Genero> generos() {
+        return generoService.findAll();
+    }
+
     @Autowired
-    public LibroController(LibroService libroService) {
+    public LibroController(LibroService libroService, GeneroService generoService) {
         this.libroService = libroService;
+        this.generoService = generoService;
     }
 
     @GetMapping({"/listado", "/"})
@@ -66,7 +77,12 @@ public class LibroController {
             model.addAttribute("titulo", "Error en el formulario");
             return Mono.just("crear");
         }
-        return this.libroService.save(libro).thenReturn("redirect:/listado?success=libro+guardado+correctamente");
+        Mono<Genero> genero = generoService.findById(libro.getGenero().getId());
+        return genero.flatMap(c -> {
+                    libro.setGenero(c);
+                    return libroService.save(libro);
+                })
+                .thenReturn("redirect:/listado?success=libro+guardado+correctamente");
     }
 
     @GetMapping("/eliminar/{id}")

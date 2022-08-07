@@ -1,5 +1,6 @@
 package com.noeliaiglesias.springbootwebflux.app.models.service;
 
+import com.noeliaiglesias.springbootwebflux.app.models.documents.Genero;
 import com.noeliaiglesias.springbootwebflux.app.models.documents.Libro;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -28,4 +29,5 @@ public interface LibroService {
     Flux<Libro> findByGeneroId(String generoId);
 
 
+    Flux<Genero> findAllGeneros();
 }

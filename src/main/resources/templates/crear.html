@@ -29,6 +29,14 @@
             <small th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></small>
         </div>
         <div class="form-group">
+            <label for="genero.id">Género*</label>
+            <select class="form-control" id="genero.id" th:field="*{genero.id}">
+                <option value="">Selecciona un género</option>
+                <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.nombre}"></option>
+            </select>
+            <small th:if="${#fields.hasErrors('genero.id')}" th:errors="*{genero.id}"></small>
+        </div>
+        <div class="form-group">
             <label for="editorial">Editorial</label>
             <input type="text" th:field="*{editorial}" class="form-control" id="editorial" placeholder="Editorial">
         </div>

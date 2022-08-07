@@ -1,7 +1,9 @@
 package com.noeliaiglesias.springbootwebflux.app.models.service.impl;
 
 import com.noeliaiglesias.springbootwebflux.app.models.dao.LibroDao;
+import com.noeliaiglesias.springbootwebflux.app.models.documents.Genero;
 import com.noeliaiglesias.springbootwebflux.app.models.documents.Libro;
+import com.noeliaiglesias.springbootwebflux.app.models.service.GeneroService;
 import com.noeliaiglesias.springbootwebflux.app.models.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,22 @@ public class LibroServiceImpl implements LibroService {
 
     private final LibroDao libroDao;
 
+    private final GeneroService generoService;
+
     @Autowired
-    public LibroServiceImpl(LibroDao libroDao) {
+    public LibroServiceImpl(LibroDao libroDao, GeneroService generoService) {
         this.libroDao = libroDao;
+        this.generoService = generoService;
     }
 
     @Override
     public Flux<Libro> findAll() {
         return libroDao.findAll();
+    }
+
+    @Override
+    public Flux<Genero> findAllGeneros() {
+        return generoService.findAll();
     }
 
     @Override
